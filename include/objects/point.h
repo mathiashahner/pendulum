@@ -12,7 +12,7 @@ public:
 
   int x, y;
 
-  void render(int xOffset, int yOffset);
+  void render();
 
 private:
   SDL_Color color;

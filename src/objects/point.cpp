@@ -21,8 +21,8 @@ Point::Point(SDL_Renderer *renderer, int x, int y, Uint32 color)
   this->color.a = color & 0xFF;
 }
 
-void Point::render(int xOffset, int yOffset)
+void Point::render()
 {
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  SDL_RenderDrawPoint(renderer, x + xOffset, y + yOffset);
+  SDL_RenderDrawPoint(renderer, x, y);
 }
