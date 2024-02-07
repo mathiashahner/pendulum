@@ -2,7 +2,7 @@
 
 Line::Line() {}
 
-Line::Line(SDL_Renderer *renderer, int x1, int y1, int x2, int y2, Uint32 color)
+Line::Line(SDL_Renderer *renderer, double x1, double y1, double x2, double y2, Uint32 color)
 {
   this->renderer = renderer;
 
@@ -17,13 +17,13 @@ Line::Line(SDL_Renderer *renderer, int x1, int y1, int x2, int y2, Uint32 color)
   this->y2 = y2;
 }
 
-void Line::render(int xOffset, int yOffset)
+void Line::render()
 {
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
-  SDL_RenderDrawLine(renderer, x1 + xOffset, y1 + yOffset, x2 + xOffset, y2 + yOffset);
+  SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 }
 
-void Line::update(int x1, int y1, int x2, int y2)
+void Line::update(double x1, double y1, double x2, double y2)
 {
   this->x1 = x1;
   this->y1 = y1;

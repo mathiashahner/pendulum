@@ -1,6 +1,6 @@
 #include <circle.h>
 
-Circle::Circle(SDL_Renderer *renderer, int x, int y, int radius, Uint32 color)
+Circle::Circle(SDL_Renderer *renderer, double x, double y, double radius, Uint32 color)
 {
   this->renderer = renderer;
   this->x = x;
@@ -13,25 +13,28 @@ Circle::Circle(SDL_Renderer *renderer, int x, int y, int radius, Uint32 color)
   this->color.a = color & 0xFF;
 }
 
-void Circle::render(int xOffset, int yOffset)
+void Circle::update(double x, double y, double radius)
 {
-  int status = 0;
-  int offsetx = 0;
-  int offsety = radius;
-  int d = radius - 1;
+  this->x = x;
+  this->y = y;
+  this->radius = radius;
+}
+
+void Circle::render()
+{
+  double status = 0;
+  double offsetx = 0;
+  double offsety = radius;
+  double d = radius - 1;
 
   SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
   while (offsety >= offsetx)
   {
-    status += SDL_RenderDrawLine(renderer, x - offsety + xOffset, y + offsetx + yOffset,
-                                 x + offsety + xOffset, y + offsetx + yOffset);
-    status += SDL_RenderDrawLine(renderer, x - offsetx + xOffset, y + offsety + yOffset,
-                                 x + offsetx + xOffset, y + offsety + yOffset);
-    status += SDL_RenderDrawLine(renderer, x - offsetx + xOffset, y - offsety + yOffset,
-                                 x + offsetx + xOffset, y - offsety + yOffset);
-    status += SDL_RenderDrawLine(renderer, x - offsety + xOffset, y - offsetx + yOffset,
-                                 x + offsety + xOffset, y - offsetx + yOffset);
+    status += SDL_RenderDrawLineF(renderer, x - offsety, y + offsetx, x + offsety, y + offsetx);
+    status += SDL_RenderDrawLineF(renderer, x - offsetx, y + offsety, x + offsetx, y + offsety);
+    status += SDL_RenderDrawLineF(renderer, x - offsetx, y - offsety, x + offsetx, y - offsety);
+    status += SDL_RenderDrawLineF(renderer, x - offsety, y - offsetx, x + offsety, y - offsetx);
 
     if (status < 0)
     {

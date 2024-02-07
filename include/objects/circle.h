@@ -6,13 +6,14 @@
 class Circle
 {
 public:
-  Circle(SDL_Renderer *renderer, int x, int y, int radius, Uint32 color);
+  Circle(SDL_Renderer *renderer, double x, double y, double radius, Uint32 color);
 
-  void render(int xOffset, int yOffset);
+  void render();
+  void update(double x, double y, double radius);
 
 private:
-  int x, y;
-  int radius;
+  double x, y;
+  double radius;
 
   SDL_Color color;
   SDL_Renderer *renderer;
