@@ -1,6 +1,6 @@
 #include <game.h>
 
-#define NUM_PENDULUMS 1
+#define NUM_PENDULUMS 100
 
 Game::Game()
 {
@@ -11,21 +11,19 @@ void Game::init()
 {
   SDL_Init(SDL_INIT_EVERYTHING);
 
-  window = SDL_CreateWindow("Pendulum", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1080, 720, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+  window = SDL_CreateWindow("Pendulum", 0, 0, 720, 480, SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED);
   renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_SOFTWARE | SDL_RENDERER_PRESENTVSYNC);
 
   // info = new Info(renderer);
 
   pendulums = new Pendulum *[NUM_PENDULUMS];
-  pendulums2 = new Pendulum2 *[NUM_PENDULUMS];
 
   for (int i = 0; i < NUM_PENDULUMS; i++)
   {
     double period = 60.0 / (i + 50.0);
     double length = pow((period / 2.0 / M_PI), 2.0) * GRAVITY;
 
-    pendulums[i] = new Pendulum(renderer, length * 750, 10, 0xFFFFFFFF);
-    pendulums2[i] = new Pendulum2(renderer, length * 750, 10, 0xFF00FFFF);
+    pendulums[i] = new Pendulum(renderer, i + 100, 1, 0xFFFFFFFF);
   }
 
   isRunning = true;
@@ -41,7 +39,6 @@ void Game::render()
   for (int i = 0; i < NUM_PENDULUMS; i++)
   {
     pendulums[i]->render();
-    pendulums2[i]->render();
   }
 
   SDL_RenderPresent(renderer);
@@ -54,7 +51,6 @@ void Game::update()
   for (int i = 0; i < NUM_PENDULUMS; i++)
   {
     pendulums[i]->update();
-    pendulums2[i]->update();
   }
 }
 

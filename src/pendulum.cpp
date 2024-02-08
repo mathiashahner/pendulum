@@ -18,14 +18,20 @@ Pendulum::~Pendulum()
 
 void Pendulum::update()
 {
+  double theta, x, y;
+  int width, height, screenCenterX, screenCenterY;
+
+  SDL_GetRendererOutputSize(renderer, &width, &height);
+  screenCenterX = width / 2;
+  screenCenterY = height / 3;
+
   this->deltaTime += 0.1;
+  theta = MAX_AMPLITUDE * cos(2 * M_PI / period * this->deltaTime);
 
-  double theta = MAX_AMPLITUDE * cos(2 * M_PI / period * this->deltaTime);
+  x = (this->length * sin(theta)) + screenCenterX;
+  y = (this->length * cos(theta)) + screenCenterY;
 
-  double x = (this->length * sin(theta)) + (1080 / 2);
-  double y = (this->length * cos(theta)) + (720 / 2);
-
-  this->line->update(1080 / 2, 720 / 2, x, y);
+  this->line->update(screenCenterX, screenCenterY, x, y);
   this->circle->update(x, y, this->radius);
 }
 

@@ -3,7 +3,6 @@
 
 #include <info.h>
 #include <pendulum.h>
-#include <pendulum2.h>
 
 class Game
 {
@@ -26,7 +25,6 @@ private:
 
   Info *info;
   Pendulum **pendulums;
-  Pendulum2 **pendulums2;
 
   bool isRunning;
   Uint32 frameStart;
