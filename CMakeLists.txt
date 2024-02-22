@@ -8,6 +8,7 @@ file(GLOB SOURCES
   src/*.cpp
   src/text/*.cpp
   src/objects/*.cpp
+  src/pendulums/*.cpp
 )
 
 add_executable(
@@ -22,6 +23,7 @@ target_include_directories(
   include/
   include/text/
   include/objects/
+  include/pendulums/
   ${SDL2_INCLUDE_DIRS}
   ${SDL2_TTF_INCLUDE_DIRS}
 )

@@ -7,6 +7,23 @@ Game::Game()
   isRunning = false;
 }
 
+static int interpolateColor(int c1, int c2, float t)
+{
+  int r1 = (c1 >> 16) & 0xFF;
+  int g1 = (c1 >> 8) & 0xFF;
+  int b1 = c1 & 0xFF;
+
+  int r2 = (c2 >> 16) & 0xFF;
+  int g2 = (c2 >> 8) & 0xFF;
+  int b2 = c2 & 0xFF;
+
+  int r = r1 + (int)((r2 - r1) * t);
+  int g = g1 + (int)((g2 - g1) * t);
+  int b = b1 + (int)((b2 - b1) * t);
+
+  return (r << 24) | (g << 16) | (b << 8) | 0xFF;
+}
+
 void Game::init()
 {
   SDL_Init(SDL_INIT_EVERYTHING);
@@ -16,14 +33,21 @@ void Game::init()
 
   // info = new Info(renderer);
 
-  pendulums = new Pendulum *[NUM_PENDULUMS];
+  // pendulums = new Pendulum *[NUM_PENDULUMS];
+  doublePendulums = new DoublePendulum *[NUM_PENDULUMS];
 
   for (int i = 0; i < NUM_PENDULUMS; i++)
   {
+    float t = (float)i / (NUM_PENDULUMS - 1);
+    int interpolated_color = interpolateColor(0x000000, 0xFFFFFF, t);
+
+    printf("#%06X\n", interpolated_color);
+
     double period = 60.0 / (i + 50.0);
     double length = pow((period / 2.0 / M_PI), 2.0) * GRAVITY;
 
-    pendulums[i] = new Pendulum(renderer, i + 100, 1, 0xFFFFFFFF);
+    // pendulums[i] = new Pendulum(renderer, i + 100, 2, 0xFFFFFFFF);
+    doublePendulums[i] = new DoublePendulum(renderer, i + 100, i + 100, 2, interpolated_color);
   }
 
   isRunning = true;
@@ -38,7 +62,8 @@ void Game::render()
 
   for (int i = 0; i < NUM_PENDULUMS; i++)
   {
-    pendulums[i]->render();
+    // pendulums[i]->render();
+    doublePendulums[i]->render();
   }
 
   SDL_RenderPresent(renderer);
@@ -50,7 +75,8 @@ void Game::update()
 
   for (int i = 0; i < NUM_PENDULUMS; i++)
   {
-    pendulums[i]->update();
+    // pendulums[i]->update();
+    doublePendulums[i]->update();
   }
 }
 

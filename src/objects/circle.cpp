@@ -60,3 +60,28 @@ void Circle::render()
     }
   }
 }
+
+double Circle::getKineticEnergy()
+{
+  return translationalEnergy() + rotationalEnergy();
+}
+
+double static lengthSquared(double velocityX, double velocityY)
+{
+  return velocityX * velocityX + velocityY * velocityY;
+}
+
+double Circle::translationalEnergy()
+{
+  return 0.5 * mass * lengthSquared(velocityX, velocityY);
+}
+
+double Circle::rotationalEnergy()
+{
+  return 0.5 * momentAboutCM() * angularVelocity * angularVelocity;
+}
+
+double Circle::momentAboutCM()
+{
+  return mass * moment;
+}

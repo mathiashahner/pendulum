@@ -11,6 +11,17 @@ public:
   void render();
   void update(double x, double y, double radius);
 
+  double momentAboutCM();
+  double getKineticEnergy();
+  double rotationalEnergy();
+  double translationalEnergy();
+
+  double mass = 200.0;
+  double moment = 0.0;
+  double velocityX = 0.0;
+  double velocityY = 0.0;
+  double angularVelocity = 0.0;
+
 private:
   double x, y;
   double radius;
